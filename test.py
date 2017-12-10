@@ -11,7 +11,10 @@ def main():
     # ips_image = discrete.get_horizontal_line_pict(data=first_ips, size=(32, 32))
     # ips_image.resize((500, 500)).save('first_ips.png')
 
-    ips_hilbert = discrete.get_hilbert_pic(data=first_ips, max_len=32 ** 2, )
+    # ips_hilbert = discrete.get_hilbert_pict(data=first_ips, max_len=32 ** 2)
+    # ips_hilbert.resize((500, 500)).save('first_ips_hilbert_1.png')
+
+    ips_hilbert = discrete.get_picture(data=first_ips, curve_mode='hilbert', max_len=32 ** 2)
     ips_hilbert.resize((500, 500)).save('first_ips_hilbert_1.png')
 
 

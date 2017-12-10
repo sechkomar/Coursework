@@ -7,12 +7,17 @@ import imp
 hilbert = imp.load_source('h', 'hilbert_curve/hilbert.py')
 
 
-def get_pict(data, size, location_fun, dict_colors):
+def get_pict(data, size, location_fun, dict_colors=None):
+
+    if dict_colors is None:
+        dict_colors = get_range_colors(list(set(data)))
+
     width, height = size
     im = Image.new(mode='RGB', size=size, color='green')
 
     for i, elem in enumerate(data):
-        im.putpixel(value=dict_colors[elem], xy=location_fun(i))
+        xy_ = location_fun(i)
+        im.putpixel(value=dict_colors[elem], xy=xy_)
 
         if i == width * height - 1:
             break
@@ -34,36 +39,21 @@ def get_range_colors(uniq_elems, colors=(Color('black'), Color('yellow'))):
     return dict_ip_color
 
 
-def get_horizontal_line_pict(data, size, colors=(Color('black'), Color('yellow'))):
+def get_horizontal_line_pict(data, size, dict_colors=None):
+
     width, height = size
-    uniq_elems = list(set(data))
 
-    dict_colors = get_range_colors(uniq_elems, colors)
+    def get_xy(i):
+        return (i % width, i / width)
 
-    im = Image.new(mode='RGB', size=size, color='green')
+    return get_pict(data, size, get_xy, dict_colors)
 
-    for i, elem in enumerate(data):
-        im.putpixel(value=dict_colors[elem], xy=(i % width, i / width))
-
-        if i == width * height - 1:
-            break
-
-    return im
-
-
-def get_hilbert_pic(data, max_len, colors=(Color('black'), Color('yellow'))):
-    uniq_elems = list(set(data))
-    dict_colors = get_range_colors(uniq_elems, colors)
+def get_hilbert_pic(data, max_len, dict_colors=None):
 
     p = int(np.log2(max_len) / 2) + 1
     side_len = 2 ** p
-    im = Image.new(mode='RGB', size=(side_len, side_len), color='red')
 
-    for i, elem in enumerate(data):
-        xy_ = hilbert.coordinates_from_distance(h=i, N=2, p=p)
-        im.putpixel(value=dict_colors[elem], xy=xy_)
+    def hilbert_xy(i):
+        return hilbert.coordinates_from_distance(N=2, h=i, p=p)
 
-        if i == max_len:
-            break
-
-    return im
+    return get_pict(data, (side_len, side_len),  hilbert_xy, dict_colors)

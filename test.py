@@ -8,12 +8,11 @@ def main():
     data = data[20000:]
     first_ips = [int((ip.split('.'))[0]) for ip in data[3]]
 
-    ips_image = discrete.get_horizontal_line_pict(data=first_ips, size=(32, 32), colors=(Color('black'), Color('green')))
+    # ips_image = discrete.get_horizontal_line_pict(data=first_ips, size=(32, 32))
     # ips_image.resize((500, 500)).save('first_ips.png')
-    ips_image.resize((500, 500)).save('first_ips.png')
 
-    ips_hilbert = discrete.get_hilbert_pic(data=first_ips, max_len=30 ** 2 + 50)
-    ips_hilbert.resize((500, 500)).save('first_ips_hilbert.png')
+    ips_hilbert = discrete.get_hilbert_pic(data=first_ips, max_len=32 ** 2, )
+    ips_hilbert.resize((500, 500)).save('first_ips_hilbert_1.png')
 
 
 

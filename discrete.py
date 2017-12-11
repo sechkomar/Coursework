@@ -1,69 +1,41 @@
 from colour import Color
-from PIL import Image
-import numpy as np
 
-import imp
-
-hilbert = imp.load_source('h', 'hilbert_curve/hilbert.py')
+import common
 
 
-def get_pict(data, size, location_fun, dict_colors):
-    width, height = size
-    im = Image.new(mode='RGB', size=size, color='green')
-
-    for i, elem in enumerate(data):
-        im.putpixel(value=dict_colors[elem], xy=location_fun(i))
-
-        if i == width * height - 1:
-            break
-
-    return im
+def __discrete_color_fun(element):
+    return element
 
 
-def get_rgb_tuple(color):
-    return tuple([int(ci * 256) for ci in color.get_rgb()])
+def __get_dict_colors(uniq_elems, colors=None):
+    if colors is None:
+        colors = (Color('black'), Color('yellow'))
+
+    color_range = list(colors[0].range_to(colors[1], len(uniq_elems) + 1))
+    dict_colors = {}
+    for ip, color in zip(uniq_elems, color_range):
+        dict_colors[ip] = common.get_rgb_tuple(color)
+
+    return dict_colors
 
 
-def get_range_colors(uniq_elems, colors=(Color('black'), Color('yellow'))):
-    color_from, color_to = colors
-    colors = list(color_from.range_to(color_to, len(uniq_elems) + 1))
-    dict_ip_color = {}
-    for ip, color in zip(uniq_elems, colors):
-        dict_ip_color[ip] = get_rgb_tuple(color)
+def get_picture(data, curve_mode, size=None, max_len=None, colors=None):
+    dict_colors = __get_dict_colors(list(set(data)), colors)
 
-    return dict_ip_color
+    if curve_mode == 'hilbert':
+        p = common.get_hilbert_p(max_len)
+        xy_fun = common.get_hilbert_xy(p=p)
+        side_len = 2 ** p
+        size = (side_len, side_len)
 
+    elif curve_mode == 'morton':
+        xy_fun = None  # TODO add morton curve mode
+    else:  # horizontal
+        width, height = size
+        xy_fun = common.get_horizontal_xy(width)
 
-def get_horizontal_line_pict(data, size, colors=(Color('black'), Color('yellow'))):
-    width, height = size
-    uniq_elems = list(set(data))
+        if max_len is None:
+            max_len = width * height
 
-    dict_colors = get_range_colors(uniq_elems, colors)
-
-    im = Image.new(mode='RGB', size=size, color='green')
-
-    for i, elem in enumerate(data):
-        im.putpixel(value=dict_colors[elem], xy=(i % width, i / width))
-
-        if i == width * height - 1:
-            break
-
-    return im
-
-
-def get_hilbert_pic(data, max_len, colors=(Color('black'), Color('yellow'))):
-    uniq_elems = list(set(data))
-    dict_colors = get_range_colors(uniq_elems, colors)
-
-    p = int(np.log2(max_len) / 2) + 1
-    side_len = 2 ** p
-    im = Image.new(mode='RGB', size=(side_len, side_len), color='red')
-
-    for i, elem in enumerate(data):
-        xy_ = hilbert.coordinates_from_distance(h=i, N=2, p=p)
-        im.putpixel(value=dict_colors[elem], xy=xy_)
-
-        if i == max_len:
-            break
-
-    return im
+    return common.final_get_pict(data=data, size=size, max_len=max_len,
+                                 xy_fun=xy_fun, color_fun=__discrete_color_fun, dict_colors=dict_colors)

@@ -5,24 +5,28 @@ from numpy import log2
 
 hilbert = imp.load_source('h', 'hilbert_curve/hilbert.py')
 
+
 def get_rgb_tuple(color):
     return tuple([int(ci * 256) for ci in color.get_rgb()])
+
 
 def get_hilbert_p(max_len):
     return int(ceil(log2(max_len) / 2))
 
-def get_hilbert_xy(p):
 
+def get_hilbert_xy(p):
     def hilbert_xy(i):
         return hilbert.coordinates_from_distance(N=2, h=i, p=p)
 
     return hilbert_xy
 
+
 def get_horizontal_xy(width):
     def horizontal_xy(i):
-        return (i % width, i / width)
+        return i % width, int(i / width)
 
     return horizontal_xy
+
 
 def final_get_pict(data, size, max_len, xy_fun, color_fun, dict_colors=None):
     im = Image.new(mode='RGB', size=size, color='green')
@@ -37,6 +41,7 @@ def final_get_pict(data, size, max_len, xy_fun, color_fun, dict_colors=None):
             break
 
     return im
+
 
 
 # def get_color_fun(data_type, extremum_elements=None, num_of_steps=None):

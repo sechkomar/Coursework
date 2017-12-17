@@ -15,8 +15,8 @@ def __get_cont_color_fun(extremum_values, num_of_steps):
     min_el, max_el = extremum_values
     step = (max_el - min_el) / float(num_of_steps)
 
-    def cont_color_fun(value): #TODO do not so govnocode
-        if (value == max_el):
+    def cont_color_fun(value):  # TODO do not so govnocode
+        if value == max_el:
             return num_of_steps - 1
         return int((value - min_el) / float(step))  # float() is necessary?
 

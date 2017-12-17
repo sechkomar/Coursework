@@ -1,5 +1,6 @@
 import common
 from colour import Color
+from PIL import Image, ImageDraw
 
 
 def __get_list_colors(num_of_steps, colors=None):
@@ -15,12 +16,25 @@ def __get_cont_color_fun(extremum_values, num_of_steps):
     min_el, max_el = extremum_values
     step = (max_el - min_el) / float(num_of_steps)
 
-    def cont_color_fun(value):  # TODO do not so govnocode
+    def cont_color_fun(value):
         if value == max_el:
             return num_of_steps - 1
-        return int((value - min_el) / float(step))  # float() is necessary?
+        return int((value - min_el) / float(step))  # is float() necessary?
 
     return cont_color_fun
+
+
+def __get_cont_legend(dict_colors, extremum_values):
+    rect_w = common.legend_width
+    min_el, max_el = extremum_values
+    step = (max_el - min_el) / len(dict_colors)
+
+    leg = Image.new(mode='RGB', size=(rect_w * 5, rect_w * len(dict_colors)))
+    draw = ImageDraw.Draw(leg)
+    for i, color in enumerate(dict_colors):
+        draw.rectangle([0, i * rect_w, rect_w * 5, (i + 1) * rect_w], fill=color)
+        draw.text([0, i * rect_w], str(min_el + i * step) + ' - ' + str(min_el + (i + 1) * step))
+    return leg
 
 
 def get_picture(data, curve_mode, num_of_steps, size=None, max_len=None, colors=None):
@@ -44,4 +58,5 @@ def get_picture(data, curve_mode, num_of_steps, size=None, max_len=None, colors=
     color_fun = __get_cont_color_fun((min(data), max(data)), num_of_steps)
 
     return common.final_get_pict(data=data, size=size, max_len=max_len,
-                                 xy_fun=xy_fun, color_fun=color_fun, dict_colors=dict_colors)
+                                 xy_fun=xy_fun, color_fun=color_fun, dict_colors=dict_colors), \
+           __get_cont_legend(dict_colors, (min(data), max(data)))

@@ -1,29 +1,37 @@
 import pandas as pd
+
+import set_colors
+
 import discrete
 import continuous
 
-from os import listdir
-import random
-
-from colour import Color
-
-
-def read_random(path, size):
-    num_lines = sum(1 for l in open(path))
-    skip_idx = random.sample(range(1, num_lines), num_lines - size)
-    data = pd.read_csv(path, skiprows=skip_idx)
-    return data
+folder_path = "/media/sechko/D814F3AB14F38AB0/coursework/VizSec/spam/"
+filename = 'spam.csv'
+pict_path = 'pictures/'
+spam_data = pd.read_csv(folder_path + filename)
 
 
-def main():
-    folder_path = "spam\\"
-    data = pd.DataFrame()
-    for file in listdir(folder_path):
-        file_path = folder_path + file
-        data.append(other=read_random(file_path, 4 ** 5))
+def get_hours_picture():
+    hours = [time.hour for time in spam_data.time]
+    hours_pict, colors = discrete.get_picture(data=hours, curve_mode='hilbert', max_len=4 ** 7,
+                                              colors=set_colors.set_colors[0])
+    hours_pict.resize((700, 700)).save('pictures/hours.png')
+    colors.save('pictures/hours_legend.png')
 
-    data.to_csv(path_or_buf='spam.csv')
 
+def init():
+    spam_data.time = pd.to_datetime(spam_data.time)
+    pass
+
+
+def get_duration_pict():
+    durations = spam_data['duration']
+    dur_pict, dur_legend = continuous.get_picture(durations, curve_mode='hilbert', max_len= 4 ** 7, num_of_steps=12,
+                           colors=set_colors.set_colors[0])
+    dur_pict.resize((700, 700)).save(pict_path + 'durations.png')
+    dur_legend.save(pict_path + 'durations_legend.png')
 
 if __name__ == '__main__':
-    main()
+    init()
+    # get_hours_picture()
+    get_duration_pict()

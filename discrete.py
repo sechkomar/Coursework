@@ -1,4 +1,5 @@
 from colour import Color
+from PIL import Image, ImageDraw
 
 import common
 
@@ -17,6 +18,17 @@ def __get_dict_colors(uniq_elems, colors=None):
         dict_colors[ip] = common.get_rgb_tuple(color)
 
     return dict_colors
+
+
+def __get_discr_legend(dict_colors):
+    rect_w = common.legend_width
+    leg = Image.new(mode='RGB', size=(rect_w * 3, rect_w * len(dict_colors)))
+    draw = ImageDraw.Draw(leg)
+    for i, elem in enumerate(dict_colors):
+        color = dict_colors[elem]
+        draw.rectangle([ 0, i * rect_w, rect_w * 3, (i + 1) * rect_w], fill=color)
+        draw.text([0, i * rect_w], str(elem))
+    return leg
 
 
 def get_picture(data, curve_mode, size=None, max_len=None, colors=None):
@@ -38,4 +50,5 @@ def get_picture(data, curve_mode, size=None, max_len=None, colors=None):
             max_len = width * height
 
     return common.final_get_pict(data=data, size=size, max_len=max_len,
-                                 xy_fun=xy_fun, color_fun=__discrete_color_fun, dict_colors=dict_colors)
+                                 xy_fun=xy_fun, color_fun=__discrete_color_fun, dict_colors=dict_colors), \
+           __get_discr_legend(dict_colors)

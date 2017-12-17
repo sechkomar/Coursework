@@ -5,6 +5,7 @@ from numpy import log2
 
 hilbert = imp.load_source('h', 'hilbert_curve/hilbert.py')
 
+legend_width = 30
 
 def get_rgb_tuple(color):
     return tuple([int(ci * 256) for ci in color.get_rgb()])
@@ -29,7 +30,7 @@ def get_horizontal_xy(width):
 
 
 def final_get_pict(data, size, max_len, xy_fun, color_fun, dict_colors=None):
-    im = Image.new(mode='RGB', size=size, color='green')
+    im = Image.new(mode='RGB', size=size, color='white')
 
     for i, elem in enumerate(data):
         xy_ = xy_fun(i)
@@ -37,7 +38,7 @@ def final_get_pict(data, size, max_len, xy_fun, color_fun, dict_colors=None):
         color = dict_colors[idx]
         im.putpixel(value=color, xy=xy_)
 
-        if i == max_len:
+        if i == max_len - 1:
             break
 
     return im

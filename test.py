@@ -1,8 +1,6 @@
 import pandas as pd
-import discrete
-import continuous
 
-from colour import Color
+import continuous
 
 
 def main():

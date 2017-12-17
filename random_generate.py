@@ -27,7 +27,7 @@ def concatenate():
     files = [f for f in sorted(listdir(folder_path))]
     for file in files:
         file_path = folder_path + file
-        curr_data = read_random_from_csv(file_path, 16 ** 2 + 200, None)
+        curr_data = read_random_from_csv(file_path, 4 ** 5 + 800, None)
         data.append(curr_data)
 
     result = pd.concat(data)
@@ -38,10 +38,11 @@ def concatenate():
 
 def get_small_file(size):
     data = read_random_from_csv(folder_path + conc_file, size, None)
-    data.columns = columns
+    # data.columns = columns
     data.to_csv(folder_path + 'small.csv')
 
 
 if __name__ == '__main__':
-    # concatenate()
-    get_small_file(32 ** 2)
+    concatenate()
+    # get_small_file(4 ** 7)
+    pass

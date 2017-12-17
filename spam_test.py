@@ -10,6 +10,9 @@ filename = 'spam.csv'
 pict_path = 'pictures/'
 spam_data = pd.read_csv(folder_path + filename)
 
+columns = ['time', 'duration', 'source_ip', 'dest_ip', 'source_port', 'dest_port',
+           'protocol', 'tsp_flags', 'tos', 'smth', 'packets_sent', 'bytes_sent', 'verdict']
+
 
 def get_hours_picture():
     hours = [time.hour for time in spam_data.time]
@@ -20,6 +23,8 @@ def get_hours_picture():
 
 
 def init():
+    spam_data.columns = columns
+    print spam_data.head()
     spam_data.time = pd.to_datetime(spam_data.time)
     pass
 

@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageFont
 import imp
 from math import ceil
 from numpy import log2

@@ -26,12 +26,39 @@ def init():
 
 def get_duration_pict():
     durations = spam_data['duration']
-    dur_pict, dur_legend = continuous.get_picture(durations, curve_mode='hilbert', max_len= 4 ** 7, num_of_steps=12,
-                           colors=set_colors.set_colors[0])
+    dur_pict, dur_legend = continuous.get_picture(data=durations,
+                                                  curve_mode='hilbert',
+                                                  max_len=4 ** 7,
+                                                  num_of_steps=50,
+                                                  colors=set_colors.set_colors[5])
     dur_pict.resize((700, 700)).save(pict_path + 'durations.png')
     dur_legend.save(pict_path + 'durations_legend.png')
 
+
+def get_source_ports_pict():
+    source_ports = spam_data['source_port']
+    scr_ports_pict, scr_ports_leg = continuous.get_picture(data=source_ports,
+                                                           curve_mode='hilbert',
+                                                           num_of_steps=10,
+                                                           max_len=4 ** 7,
+                                                           colors=set_colors.set_colors[0])
+
+    scr_ports_pict.resize((700, 700)).save(pict_path + 'src_ports.png')
+    scr_ports_leg.save(pict_path + 'src_ports_leg.png')
+
+
+def get_tcp_flags_pict():
+    flags = spam_data['tsp_flags']
+    flags_pict, flags_leg = discrete.get_picture(data=flags, curve_mode='hilbert', max_len=4 ** 7,
+                                              colors=set_colors.set_colors[8])
+    flags_pict.resize((700, 700)).save('pictures/flags.png')
+    flags_leg.save('pictures/flags_legend.png')
+
+
+
 if __name__ == '__main__':
     init()
-    # get_hours_picture()
-    get_duration_pict()
+    get_hours_picture()
+    # get_duration_pict()
+    # get_source_ports_pict()
+    # get_tcp_flags_pict()

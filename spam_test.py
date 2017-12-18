@@ -23,8 +23,8 @@ def get_hours_picture():
 
 
 def init():
-    spam_data.columns = columns
-    print spam_data.head()
+    # print spam_data.head()
+    # spam_data.columns = columns
     spam_data.time = pd.to_datetime(spam_data.time)
     pass
 
@@ -60,10 +60,48 @@ def get_tcp_flags_pict():
     flags_leg.save('pictures/flags_legend.png')
 
 
+def get_dest_ports_pict():
+    source_ports = spam_data['dest_port']
+    scr_ports_pict, scr_ports_leg = continuous.get_picture(data=source_ports,
+                                                           curve_mode='hilbert',
+                                                           num_of_steps=10,
+                                                           max_len=4 ** 7,
+                                                           colors=set_colors.set_colors[5])
+
+    scr_ports_pict.resize((700, 700)).save(pict_path + 'dest_ports.png')
+    scr_ports_leg.save(pict_path + 'dest_ports_leg.png')
+
+
+def get_source_ips_pict():
+    source_ips = [int(ip.split('.')[0]) for ip in spam_data['source_ip']]
+    scr_ips_pict, scr_ips_leg = discrete.get_picture(data=source_ips,
+                                                           curve_mode='hilbert',
+                                                           # num_of_steps=10,
+                                                           max_len=4 ** 7,
+                                                           colors=set_colors.set_colors[14])
+
+    scr_ips_pict.resize((700, 700)).save(pict_path + 'source_ip.png')
+    scr_ips_leg.save(pict_path + 'source_ip_leg.png')
+
+
+def get_dest_ips_pict():
+    dest_ips = [int(ip.split('.')[0]) for ip in spam_data['dest_ip']]
+    dest_ips_pict, dest_ips_leg = discrete.get_picture(data=dest_ips,
+                                                     curve_mode='hilbert',
+                                                     # num_of_steps=10,
+                                                     max_len=4 ** 7,
+                                                     colors=set_colors.set_colors[15])
+
+    dest_ips_pict.resize((700, 700)).save(pict_path + 'dest_ip.png')
+    dest_ips_leg.save(pict_path + 'dest_ip_leg.png')
+
 
 if __name__ == '__main__':
     init()
-    get_hours_picture()
+    # get_hours_picture()
     # get_duration_pict()
     # get_source_ports_pict()
+    # get_dest_ports_pict()
     # get_tcp_flags_pict()
+    # get_source_ips_pict()
+    # get_dest_ips_pict()

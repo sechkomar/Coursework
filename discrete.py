@@ -14,7 +14,7 @@ def __get_dict_colors(uniq_elems, colors=None):
 
     color_range = list(colors[0].range_to(colors[1], len(uniq_elems) + 1))
     dict_colors = {}
-    for ip, color in zip(uniq_elems, color_range):
+    for ip, color in zip(sorted(uniq_elems), color_range):
         dict_colors[ip] = common.get_rgb_tuple(color)
 
     return dict_colors
@@ -24,7 +24,7 @@ def __get_discr_legend(dict_colors):
     rect_w = common.legend_width
     leg = Image.new(mode='RGB', size=(rect_w * 3, rect_w * len(dict_colors)))
     draw = ImageDraw.Draw(leg)
-    for i, elem in enumerate(dict_colors):
+    for i, elem in enumerate(sorted(dict_colors)):
         color = dict_colors[elem]
         draw.rectangle([ 0, i * rect_w, rect_w * 3, (i + 1) * rect_w], fill=color)
         draw.text([0, i * rect_w], str(elem))
@@ -32,7 +32,12 @@ def __get_discr_legend(dict_colors):
 
 
 def get_picture(data, curve_mode, size=None, max_len=None, colors=None):
-    dict_colors = __get_dict_colors(list(set(data)), colors)
+    if type(colors) is dict:
+        dict_colors = colors
+    else:
+        dict_colors = __get_dict_colors(list(set(data)), colors)
+    if max_len == None:
+        max_len = len(data)
 
     if curve_mode == 'hilbert':
         p = common.get_hilbert_p(max_len)

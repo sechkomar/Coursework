@@ -12,6 +12,10 @@ set_colors = [
     (Color('#2F7336'), Color('#AA3A38')),
     (Color('#3a6186'), Color('#89253e')),
     (Color('#DC2424'), Color('#4A569D')), # 10
-
+    (Color('#C33764'), Color('#1D2671')),
+    (Color('#43C6AC'), Color('#F8FFAE')),
+    (Color('black'), Color('red')),
+    (Color('black'), Color('yellow')),
+    (Color('black'), Color('green'))
 
 ]

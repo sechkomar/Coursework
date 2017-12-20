@@ -33,12 +33,15 @@ def __get_cont_legend(dict_colors, extremum_values):
     draw = ImageDraw.Draw(leg)
     for i, color in enumerate(dict_colors):
         draw.rectangle([0, i * rect_w, rect_w * 5, (i + 1) * rect_w], fill=color)
-        draw.text([0, i * rect_w], str(min_el + i * step) + ' - ' + str(min_el + (i + 1) * step))
+        draw.text([0, i * rect_w], str(int(min_el + i * step)) + ' - ' + str(int(min_el + (i + 1) * step)))
     return leg
 
 
 def get_picture(data, curve_mode, num_of_steps, size=None, max_len=None, colors=None):
-    dict_colors = __get_list_colors(num_of_steps, colors)
+    if type(colors) is dict:
+        dict_colors = colors
+    else:
+        dict_colors = __get_list_colors(num_of_steps, colors)
 
     if curve_mode == 'hilbert':
         p = common.get_hilbert_p(max_len)

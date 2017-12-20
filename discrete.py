@@ -26,7 +26,7 @@ def __get_discr_legend(dict_colors):
     draw = ImageDraw.Draw(leg)
     for i, elem in enumerate(sorted(dict_colors)):
         color = dict_colors[elem]
-        draw.rectangle([ 0, i * rect_w, rect_w * 3, (i + 1) * rect_w], fill=color)
+        draw.rectangle([0, i * rect_w, rect_w * 3, (i + 1) * rect_w], fill=color)
         draw.text([0, i * rect_w], str(elem))
     return leg
 
@@ -36,10 +36,11 @@ def get_picture(data, curve_mode, size=None, max_len=None, colors=None):
         dict_colors = colors
     else:
         dict_colors = __get_dict_colors(list(set(data)), colors)
-    if max_len == None:
-        max_len = len(data)
 
     if curve_mode == 'hilbert':
+        if max_len is None:
+            max_len = len(data)
+
         p = common.get_hilbert_p(max_len)
         xy_fun = common.get_hilbert_xy(p=p)
         side_len = 2 ** p

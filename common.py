@@ -7,6 +7,7 @@ hilbert = imp.load_source('h', 'hilbert_curve/hilbert.py')
 
 legend_width = 30
 
+
 def get_rgb_tuple(color):
     return tuple([int(ci * 256) for ci in color.get_rgb()])
 

@@ -1,4 +1,4 @@
-import common
+from scripts import common
 from colour import Color
 from PIL import Image, ImageDraw
 

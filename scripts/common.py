@@ -1,9 +1,7 @@
 from PIL import Image
-import imp
 from math import ceil
 from numpy import log2
-
-hilbert = imp.load_source('h', 'hilbert_curve/hilbert.py')
+from hilbert_curve import hilbert
 
 legend_width = 30
 
@@ -43,8 +41,6 @@ def final_get_pict(data, size, max_len, xy_fun, color_fun, dict_colors=None):
             break
 
     return im
-
-
 
 # def get_color_fun(data_type, extremum_elements=None, num_of_steps=None):
 #     if data_type == 'c':

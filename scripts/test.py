@@ -1,6 +1,6 @@
 import pandas as pd
 
-import continuous
+from scripts import continuous
 
 
 def main():

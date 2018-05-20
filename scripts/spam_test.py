@@ -1,14 +1,12 @@
 import pandas as pd
 
-import continuous
-import discrete
-import set_colors
+from scripts import discrete, set_colors, continuous
 
-# folder_path = "/media/sechko/D814F3AB14F38AB0/coursework/VizSec/spam/"
-folder_path = ''
+folder_path = "/media/sechko/D814F3AB14F38AB0/coursework/VizSec/spam/"
+# folder_path = ''
 
-# pict_path = 'pictures/'
-pict_path = 'D:\coursework\pictures\\'
+pict_path = 'pictures/'
+# pict_path = 'D:\coursework\pictures\\'
 
 filename = 'spam.csv'
 
@@ -129,12 +127,12 @@ def get_packets_sent():
 
 if __name__ == '__main__':
     init()
-    # get_hours_picture()
-    # get_duration_pict()
+    get_hours_picture()
+    get_duration_pict()
     # get_ports_pict()
-    # get_tcp_flags_pict()
-
-    # get_ips_country()
+    get_tcp_flags_pict()
+    #
+    get_ips_country()
 
     get_packets_sent()
     pass

@@ -1,9 +1,6 @@
 import pandas as pd
 
-import set_colors
-
-import discrete
-import continuous
+from scripts import discrete, set_colors
 from math import sqrt
 
 file_path = 'CSDMC_API_Train.csv'

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtWidgets import QFileDialog
-from plot_window import PlotWindow as PlotWind
+from PyQt5.QtWidgets import *
+import pandas as pd
 
 
 class BrowseWindow(object):
     def __init__(self):
-        self.pl = PlotWind()
+        self.df = pd.DataFrame()
         pass
 
     def setupUi(self, browseWindow):
@@ -140,12 +140,17 @@ class BrowseWindow(object):
         self.filePath.setText(file_path)
         pass
 
-    def plotWindow(self):
-        # get_plot(self.filePath.text)
-        self.pl.show()
+    def read_csv(self):
+        path = self.filePath.text()
+        self.df = pd.read_csv(path)
+
         pass
 
     def setActions(self):
         self.browseFileButton.clicked.connect(self.selectFile)
-        self.okButton.clicked.connect(self.plotWindow)
+        self.okButton.clicked.connect(self.read_csv)
         pass
+
+
+
+

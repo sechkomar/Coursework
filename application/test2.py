@@ -79,6 +79,8 @@ for i, key in enumerate(data):
 
     ax.format_coord = form_coord
     im = ax.imshow(vals)
+    figure.colorbar(im)
+
 
 infos = ['serial_num = {}\n'.format(ord_id)
          + 'x={}, y={}\n'.format(*xy_by_i[ord_id])
@@ -96,9 +98,9 @@ def cursor_info(**kwargs):
 mpldatacursor.datacursor(hover=True, bbox=dict(alpha=0.7, fc='w'),
                          formatter=cursor_info)
 
-figure.subplots_adjust(right=0.8)
-cbar_ax = figure.add_axes([0.85, 0.15, 0.05, 0.7])
-figure.colorbar(im, cax=cbar_ax)
+# figure.subplots_adjust(right=0.8)
+# cbar_ax = figure.add_axes([0.85, 0.15, 0.05, 0.7])
+# figure.colorbar(im, cax=cbar_ax)
 
 
 def onclick(event):

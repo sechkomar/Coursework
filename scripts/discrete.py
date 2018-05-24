@@ -34,7 +34,7 @@ def __get_discr_legend(dict_colors):
     return legend
 
 
-def get_picture(data, curve_mode, size=None, max_len=None, colors=None):
+def pixel_plot(data, curve_mode, size=None, max_len=None, colors=None):
     if type(colors) is dict:
         dict_colors = colors
     else:

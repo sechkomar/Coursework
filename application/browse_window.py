@@ -2,9 +2,14 @@
 
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QFileDialog
+from plot_window import PlotWindow as PlotWind
 
 
-class Ui_browseWindow(object):
+class BrowseWindow(object):
+    def __init__(self):
+        self.pl = PlotWind()
+        pass
+
     def setupUi(self, browseWindow):
         browseWindow.setObjectName("browseWindow")
         browseWindow.resize(510, 425)
@@ -93,19 +98,14 @@ class Ui_browseWindow(object):
 
         QtCore.QMetaObject.connectSlotsByName(browseWindow)
 
-
-    def selectFile(self):
-        file_path = QFileDialog.getOpenFileName()[0]
-        self.filePath.setText(file_path)
-
     def retranslateUi(self, browseWindow):
         _translate = QtCore.QCoreApplication.translate
         browseWindow.setWindowTitle(_translate("browseWindow", "Pixel plot creator"))
         self.appDescriptionLabel.setText(_translate("browseWindow",
-                                               "<html><head/><body><p><span style=\" font-size:12pt;\">Please select "
-                                               "the file in .csv format, choose a curve mode </span></p><p><span "
-                                               "style=\" font-size:12pt;\">and colors to create a pixel plot. "
-                                               "</span></p></body></html>"))
+                                                    "<html><head/><body><p><span style=\" font-size:12pt;\">Please select "
+                                                    "the file in .csv format, choose a curve mode </span></p><p><span "
+                                                    "style=\" font-size:12pt;\">and colors to create a pixel plot. "
+                                                    "</span></p></body></html>"))
 
         self.browseFileButton.setText(_translate("browseWindow", "..."))
         self.filePathLabel.setText(_translate("browseWindow", "File path"))
@@ -135,6 +135,17 @@ class Ui_browseWindow(object):
         self.actionNew.setText(_translate("browseWindow", "New"))
         self.actionSave.setText(_translate("browseWindow", "Save"))
 
+    def selectFile(self):
+        file_path = QFileDialog.getOpenFileName()[0]
+        self.filePath.setText(file_path)
+        pass
+
+    def plotWindow(self):
+        # get_plot(self.filePath.text)
+        self.pl.show()
+        pass
+
     def setActions(self):
         self.browseFileButton.clicked.connect(self.selectFile)
+        self.okButton.clicked.connect(self.plotWindow)
         pass

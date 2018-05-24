@@ -80,11 +80,11 @@ def get_tcp_flags_pict():
 
 
 def save_discr_pict(data, path, curve_mode, size=None, max_len=None, dict_colors=None):
-    pict, legend = discrete.get_picture(data=data,
-                                        curve_mode=curve_mode,
-                                        size=size,
-                                        max_len=max_len,
-                                        colors=dict_colors)
+    pict, legend = discrete.pixel_plot(data=data,
+                                       curve_mode=curve_mode,
+                                       size=size,
+                                       max_len=max_len,
+                                       colors=dict_colors)
 
     pict.resize((700, 700)).save(path + '.png')
     legend.save(path + '_leg.png')
@@ -99,6 +99,7 @@ def get_ips_country():
         src_countries = [l.strip('\n') for l in fin.readlines()]
 
     dict_colors = discrete.__get_dict_colors(set(dest_countries + src_countries), colors=set_colors.set_colors[7])
+
     save_discr_pict(dest_countries, pict_path + 'dest_countries', curve_mode='hilbert',
                     max_len=4 ** 7, dict_colors=dict_colors)
 

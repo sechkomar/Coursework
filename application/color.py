@@ -1,42 +1,70 @@
 import sys
+
 from PyQt5.QtWidgets import (QWidget, QPushButton, QFrame,
-                             QColorDialog, QApplication)
-from PyQt5.QtGui import QColor
+                             QColorDialog, QApplication, QVBoxLayout)
 
 
-class Example(QWidget):
-
+class ColorDialog(QWidget):
     def __init__(self):
         super().__init__()
 
+        self.colorFrom = ''
+        self.colorTo = ''
         self.initUI()
 
     def initUI(self):
-        col = QColor(0, 0, 0)
+        self.colorFromBtn = QPushButton('Color from', self)
+        self.colorToBtn = QPushButton('Color to', self)
 
-        self.btn = QPushButton('Dialog', self)
-        self.btn.move(20, 20)
+        self.colorFromBtn.clicked.connect(self.showFromDialog)
+        self.colorToBtn.clicked.connect(self.showToDialog)
 
-        self.btn.clicked.connect(self.showDialog)
+        self.fromFrame = QFrame(self)
+        self.toFrame = QFrame(self)
 
-        self.frm = QFrame(self)
-        self.frm.setStyleSheet("QWidget { background-color: %s }"
-                               % col.name())
-        self.frm.setGeometry(130, 22, 100, 100)
+        self.setGeometry(500, 300, 250, 350)
 
-        self.setGeometry(300, 300, 250, 180)
-        self.setWindowTitle('Color dialog')
+        self.okBtn = QPushButton('OK', self)
+        self.okBtn.clicked.connect(self.setGradColors)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.colorFromBtn)
+        layout.addWidget(self.fromFrame)
+        layout.addWidget(self.colorToBtn)
+        layout.addWidget(self.toFrame)
+        layout.addWidget(self.okBtn)
+        self.setLayout(layout)
+
+        self.setWindowTitle('Colors dialog')
         self.show()
 
-    def showDialog(self):
+    def showFromDialog(self):
         col = QColorDialog.getColor()
 
         if col.isValid():
-            self.frm.setStyleSheet("QWidget { background-color: %s }"
-                                   % col.name())
+            self.fromFrame.setStyleSheet("QWidget { background-color: %s }"
+                                         % col.name())
+            self.colorFrom = col.name()
+        pass
+
+    def showToDialog(self):
+        col = QColorDialog.getColor()
+
+        if col.isValid():
+            self.toFrame.setStyleSheet("QWidget { background-color: %s }"
+                                       % col.name())
+            self.colorTo = col.name()
+        pass
+
+    def setGradColors(self):
+        with open('color.txt', 'w') as out:
+            out.write('{} {}'.format(self.colorFrom, self.colorTo))
+
+        self.close()
+        pass
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = Example()
+    ex = ColorDialog()
     sys.exit(app.exec_())

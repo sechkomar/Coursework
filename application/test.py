@@ -2,7 +2,7 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pyqt_themes import fusion_dark
 
-from browse_window import Ui_browseWindow
+from browse_window import BrowseWindow
 
 
 def set_style(app):
@@ -18,7 +18,8 @@ if __name__ == "__main__":
     set_style(app)
 
     browseWindow = QtWidgets.QMainWindow()
-    ui = Ui_browseWindow()
+    ui = BrowseWindow()
     ui.setupUi(browseWindow)
     browseWindow.show()
+
     sys.exit(app.exec_())

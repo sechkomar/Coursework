@@ -29,18 +29,22 @@ def get_horizontal_xy(width):
 
 
 def final_get_pict(data, size, max_len, xy_fun, color_fun, dict_colors=None):
-    im = Image.new(mode='RGB', size=size, color='white')
+    images = {}
 
     for i, elem in enumerate(data):
         xy_ = xy_fun(i)
         idx = color_fun(elem)
         color = dict_colors[idx]
-        im.putpixel(value=color, xy=xy_)
+
+        if idx not in images.keys():
+            images[idx] = Image.new(mode='RGB', size=size)
+
+        images[idx].putpixel(value=color, xy=xy_)
 
         if i == max_len - 1:
             break
 
-    return im
+    return images
 
 # def get_color_fun(data_type, extremum_elements=None, num_of_steps=None):
 #     if data_type == 'c':

@@ -91,27 +91,24 @@ def _transpose_to_hilbert_integer(x, p, N):
     x_bit_str = [_binary_repr(x[i], p) for i in range(N)]
     h = int(''.join([y[i] for i in range(p) for y in x_bit_str]), 2)
     return h
-
+    # """Return the coordinates for a given hilbert distance.
+    #
+    # :param h: integer distance along the curve
+    # :type h: ``int``
+    # :param p: side length of hypercube is 2^p
+    # :type p: ``int``
+    # :param N: number of dimensions
+    # :type N: ``int``
+    # """
 def coordinates_from_distance(h, p, N):
-    """Return the coordinates for a given hilbert distance.
-
-    :param h: integer distance along the curve
-    :type h: ``int``
-    :param p: side length of hypercube is 2^p
-    :type p: ``int``
-    :param N: number of dimensions
-    :type N: ``int``
-    """
     x = _hilbert_integer_to_transpose(h, p, N)
     Z = 2 << (p-1)
 
-    # Gray decode by H ^ (H/2)
     t = x[N-1] >> 1
     for i in range(N-1, 0, -1):
         x[i] ^= x[i-1]
     x[0] ^= t
 
-    # Undo excess work
     Q = 2
     while Q != Z:
         P = Q - 1
@@ -120,13 +117,12 @@ def coordinates_from_distance(h, p, N):
                 # invert
                 x[0] ^= P
             else:
-                # excchange
+                # exchange
                 t = (x[0] ^ x[i]) & P
                 x[0] ^= t
                 x[i] ^= t
         Q <<= 1
 
-    # done
     return x
 
 def distance_from_coordinates(x, p, N):

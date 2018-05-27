@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import pyqtSlot
+# from PyQt5.QtGui import QIcon
+# from PyQt5.QtCore import pyqtSlot
 
 from test import set_style
 
@@ -39,20 +39,28 @@ class App(QDialog):
 
         fields = ['time', 'duration', 'source_ip', 'dest_ip', 'source_port', 'dest_port',
                   'protocol', 'tsp_flags', 'tos', 'smth', 'packets_sent', 'bytes_sent', 'verdict']
+        cont = ['time', 'duration', 'source_port', 'dest_port', 'packets_sent', 'bytes_sent']
 
         boxes = {}
 
         data_layout.addWidget(QLabel("Choose type of fields and fields to skip:"))
-        for i, field in enumerate(fields):
-            boxes[i] = QComboBox()
-            boxes[i].addItems(['continuous', 'discrete', 'skip'])
-            data_layout.addWidget(boxes[i], i + 1, 1)
 
+        for i, field in enumerate(fields):
             label = QLabel()
             label.setText(field)
             data_layout.addWidget(label, i + 1, 0)
 
-        data_layout.addWidget(self.okButton, len(fields) + 2, 2)
+            boxes[i] = QComboBox()
+            boxes[i].addItems(['continuous', 'discrete', 'skip'])
+            data_layout.addWidget(boxes[i], i + 1, 1)
+
+            line = QLineEdit()
+            data_layout.addWidget(line, i + 1, 2)
+            if field not in cont:
+                line.setEnabled(False)
+
+        data_layout.addWidget(QPushButton("Cancel"), len(fields) + 2, 2)
+        data_layout.addWidget(self.okButton, len(fields) + 2, 3)
         self.horizontalGroupBox.setLayout(data_layout)
 
 

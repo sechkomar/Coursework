@@ -43,19 +43,19 @@ class BrowseWindow(object):
         self.curveModeLabel.setGeometry(QtCore.QRect(20, 180, 141, 17))
         self.curveModeLabel.setObjectName("curveModeLabel")
 
-        self.colorsLabel = QtWidgets.QLabel(self.centralWidget)
-        self.colorsLabel.setGeometry(QtCore.QRect(20, 270, 131, 17))
-        self.colorsLabel.setObjectName("colorsLabel")
+        # self.colorsLabel = QtWidgets.QLabel(self.centralWidget)
+        # self.colorsLabel.setGeometry(QtCore.QRect(20, 270, 131, 17))
+        # self.colorsLabel.setObjectName("colorsLabel")
 
-        self.colorsComboBox = QtWidgets.QComboBox(self.centralWidget)
-        self.colorsComboBox.setGeometry(QtCore.QRect(20, 300, 281, 31))
-        self.colorsComboBox.setObjectName("colorsComboBox")
-        self.colorsComboBox.addItem("")
-        self.colorsComboBox.addItem("")
-        self.colorsComboBox.addItem("")
+        # self.colorsComboBox = QtWidgets.QComboBox(self.centralWidget)
+        # self.colorsComboBox.setGeometry(QtCore.QRect(20, 300, 281, 31))
+        # self.colorsComboBox.setObjectName("colorsComboBox")
+        # self.colorsComboBox.addItem("")
+        # self.colorsComboBox.addItem("")
+        # self.colorsComboBox.addItem("")
 
         self.okButton = QtWidgets.QPushButton(self.centralWidget)
-        self.okButton.setGeometry(QtCore.QRect(390, 350, 101, 29))
+        self.okButton.setGeometry(QtCore.QRect(350, 260, 101, 29))
         self.okButton.setObjectName("okButton")
 
         browseWindow.setCentralWidget(self.centralWidget)
@@ -103,8 +103,8 @@ class BrowseWindow(object):
         browseWindow.setWindowTitle(_translate("browseWindow", "Pixel plot creator"))
         self.appDescriptionLabel.setText(_translate("browseWindow",
                                                     "<html><head/><body><p><span style=\" font-size:12pt;\">Please select "
-                                                    "the file in .csv format, choose a curve mode </span></p><p><span "
-                                                    "style=\" font-size:12pt;\">and colors to create a pixel plot. "
+                                                    "the file in .csv format and choose a curve</span></p><p><span "
+                                                    "style=\" font-size:12pt;\">mode to create a pixel plot. "
                                                     "</span></p></body></html>"))
 
         self.browseFileButton.setText(_translate("browseWindow", "..."))
@@ -118,13 +118,13 @@ class BrowseWindow(object):
         self.curveModeComboBox.setItemText(2, _translate("browseWindow", "Morton curve"))
         self.curveModeLabel.setText(_translate("browseWindow", "Curve mode"))
 
-        self.colorsLabel.setText(_translate("browseWindow", "Choose colors"))
-        self.colorsComboBox.setCurrentText(_translate("browseWindow", "choose colors for plot"))
-
-        self.colorsComboBox.setItemText(0, _translate("browseWindow", "red-black"))
-        self.colorsComboBox.setItemText(1, _translate("browseWindow", "yellow-black"))
-        self.colorsComboBox.setItemText(2, _translate("browseWindow", "random"))
-
+        # self.colorsLabel.setText(_translate("browseWindow", "Choose colors"))
+        # self.colorsComboBox.setCurrentText(_translate("browseWindow", "choose colors for plot"))
+        #
+        # self.colorsComboBox.setItemText(0, _translate("browseWindow", "red-black"))
+        # self.colorsComboBox.setItemText(1, _translate("browseWindow", "yellow-black"))
+        # self.colorsComboBox.setItemText(2, _translate("browseWindow", "random"))
+        #
         self.okButton.setText(_translate("browseWindow", "OK"))
 
         self.menuFile.setTitle(_translate("browseWindow", "File"))
